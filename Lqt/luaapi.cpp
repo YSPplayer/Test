@@ -1,9 +1,10 @@
 /*
-    ´´½¨ÈË£ºÉñÊı²»Éñ
-    ´´½¨ÈÕÆÚ£º2025-3-7
-    ÎŞĞŞÕı
+    åˆ›å»ºäººï¼šç¥æ•°ä¸ç¥
+    åˆ›å»ºæ—¥æœŸï¼š2025-3-7
+    æ— ä¿®æ­£
 */
 #include "luaapi.h"
+#include "lglobal.h"
 namespace ysp::lqt {
  /*   QMap <qint32, QString> LuaApi::constValueMap = {
        {LUA_VALUE_QWIDEGT_SHOW,"SHOW"},{LUA_VALUE_QWIDEGT_HIDE,"HIDE"},{LUA_VALUE_QWIDEGT_SETGEOMETRY,"SET_GEOMETRY"},
@@ -13,4 +14,55 @@ namespace ysp::lqt {
     QList<QString> LuaApi::defaultEnvironmentKey = { "pairs","ipairs","require","io","print","_VERSION","collectgarbage","rawlen",
     "assert","tostring","load","rawequal","setmetatable","next","math","rawget","os","string","loadfile","_G","error","debug",
     "utf8","table","getmetatable","rawset","pcall","warn","type","xpcall","coroutine","dofile","select","package","tonumber" };
+    /// <summary>
+     /// æ³¨å†Œluaå‡½æ•°
+     /// </summary>
+    void LuaApi::LibRegister(lua_State* L) {
+        luaL_openlibs(L);  //æ³¨å†Œæ ‡å‡†åº“
+        LuaRegisterGlobal(L); //æ³¨å†Œå…¨å±€å‡½æ•°
+        LuaRegisterUserData(L);//æ³¨å†Œè‡ªå®šä¹‰ç±»å‹
+    }
+
+    /// <summary>
+    /// å…¨å±€å‡½æ•°
+    /// </summary>
+    /// <param name="L"></param>
+    void LuaApi::LuaRegisterGlobal(lua_State* L) {
+        lua_register(L, "DebugMessage", LGlobal::DebugMessage);
+    }
+
+    /// <summary>
+    /// æ³¨å†Œç”¨æˆ·å‡½æ•°
+    /// </summary>
+    /// <param name="L"></param>
+    void LuaApi::LuaRegisterUserData(lua_State* L) {
+        luabridge::getGlobalNamespace(L)
+            .beginNamespace("ysp")
+            .beginNamespace("lqt")
+            .beginNamespace("ui")
+            .beginClass<LWidget>("LWidget")
+            .addConstructor<void(*)(LWidget*)>()
+            .addFunction("resize", &LWidget::resize)
+            .addFunction("move", &LWidget::move)
+            .addFunction("show", &LWidget::show)
+            .addFunction("hide", &LWidget::hide)
+            .addFunction("setGeometry", &LWidget::setGeometry)
+            .addFunction("setStyleSheet", &LWidget::setStyleSheet)
+            .addFunction("width", &LWidget::width)
+            .addFunction("height", &LWidget::height)
+            .addFunction("setEnterCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
+                widget->setEnterCallback(callback);
+            }))
+            .addFunction("setLeaveCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
+            widget->setLeaveCallback(callback);
+            }))
+            .addFunction("setClickedCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
+            widget->setClickedCallback(callback);
+            }))
+            .endClass()
+            .endNamespace()
+            .endNamespace()
+            .endNamespace();
+
+    }
 }

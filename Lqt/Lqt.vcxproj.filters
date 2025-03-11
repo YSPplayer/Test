@@ -32,7 +32,7 @@
     <ClInclude Include="lqt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luamanage.h">
+    <ClInclude Include="luastate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="luaapi.h">
@@ -41,12 +41,30 @@
     <ClInclude Include="tag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ui\lwidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ui\cwidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lglobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="luamanage.cpp">
+    <ClCompile Include="luastate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="luaapi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ui\lwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
