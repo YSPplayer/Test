@@ -36,11 +36,12 @@ namespace ysp::lqt {
     /// </summary>
     /// <param name="L"></param>
     void LuaApi::LuaRegisterUserData(lua_State* L) {
+        //LWidget
         luabridge::getGlobalNamespace(L)
             .beginNamespace("ysp")
             .beginNamespace("lqt")
             .beginNamespace("ui")
-            .beginClass<LWidget>("LWidget")
+            .beginClass<LWidget>("QWidget")
             .addConstructor<void(*)(LWidget*)>()
             .addFunction("resize", &LWidget::resize)
             .addFunction("move", &LWidget::move)
@@ -50,7 +51,12 @@ namespace ysp::lqt {
             .addFunction("setStyleSheet", &LWidget::setStyleSheet)
             .addFunction("width", &LWidget::width)
             .addFunction("height", &LWidget::height)
-            .addFunction("setEnterCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
+            .addFunction("x", &LWidget::x)
+            .addFunction("y", &LWidget::y)
+            .addFunction("setEnabled", &LWidget::setEnabled)
+            .addFunction("setFixedSize", &LWidget::setFixedSize)
+            .addFunction("setWindowTitle", &LWidget::setWindowTitle)
+         /*   .addFunction("setEnterCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
                 widget->setEnterCallback(callback);
             }))
             .addFunction("setLeaveCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
@@ -58,7 +64,11 @@ namespace ysp::lqt {
             }))
             .addFunction("setClickedCallback", Callback<LWidget>(L, [](LWidget* widget, const std::function<void(LWidget*)>& callback) {
             widget->setClickedCallback(callback);
-            }))
+            }))*/
+            .endClass()
+            .deriveClass<LLabel, LWidget>("QLabel") //继承函数这么导出
+            .addConstructor<void(*)(LWidget*)>()
+            .addFunction("setText", &LLabel::setText)
             .endClass()
             .endNamespace()
             .endNamespace()

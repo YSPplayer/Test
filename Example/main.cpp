@@ -9,6 +9,6 @@ int main(int argc, char *argv[])
     w.show();*/
     LuaState* s = new LuaState;
     s->Start();
-    s->RunLuaScript("D:\\YueShaoPu\\Test\\Example\\x64\\Debug\\test.lua");
+    s->RunLuaScript(QApplication::applicationDirPath()  + "/test.lua");
     return a.exec();
 }

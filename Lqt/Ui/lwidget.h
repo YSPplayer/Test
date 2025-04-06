@@ -8,6 +8,8 @@
 #include "cwidget.h"
 namespace ysp::lqt::ui {
     class LWidget {
+    protected:
+        QWidget* qwidget;
     private:
         CWidget* widget;
     public:
@@ -15,16 +17,23 @@ namespace ysp::lqt::ui {
             return widget;
         }
         LWidget(LWidget* parent);
-        void setEnterCallback(const std::function<void(LWidget*)>& callback);
+        LWidget();
+        ~LWidget();
+      /*  void setEnterCallback(const std::function<void(LWidget*)>& callback);
         void setLeaveCallback(const std::function<void(LWidget*)>& callback);
-        void setClickedCallback(const std::function<void(LWidget*)>& callback);
+        void setClickedCallback(const std::function<void(LWidget*)>& callback);*/
         void resize(qint32 width, qint32 height);
+        void setFixedSize(qint32 width, qint32 height);
+        void setEnabled(bool enable);
         void move(qint32 x, qint32 y);
         void show();
         void hide();
         void setGeometry(qint32 x, qint32 y, qint32 w, qint32 h); 
         void setStyleSheet(const std::string& styleSheet);
+        void setWindowTitle(const std::string& text);
         qint32 width();
         qint32 height();
+        qint32 x();
+        qint32 y();
     };
 }

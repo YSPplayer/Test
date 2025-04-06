@@ -10,6 +10,7 @@
 #include <QMap>
 #include <QList>
 #include "Ui/lwidget.h"
+#include "Ui/llabel.h"
 #include "Util/util.h"
 using namespace ysp::tool;
 using namespace ysp::lqt::ui;

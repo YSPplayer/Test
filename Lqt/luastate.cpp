@@ -28,7 +28,6 @@ namespace ysp::lqt {
     void LuaState::Start() {
         L = luaL_newstate();
         LuaApi::LibRegister(L);
-
     }
 
     LuaState::~LuaState() {
